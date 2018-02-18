@@ -24,14 +24,17 @@ class Song(object):
 class Playlist(object):
     songs = []
     title = ''
+    description = ''
 
-    def __init__(self, songs, title):
+    def __init__(self, songs, title, description):
         self.songs = songs
         self.title = title
+        self.description = description
 
     @staticmethod
     def from_spotify(json):
         return Playlist(
-            songs=[Song.from_spotify(song) for song in json['tracks']],
+            songs=[Song.from_spotify(item['track']) for item in json['tracks']['items']],
             title=json['name'],
+            description=json['description'],
         )

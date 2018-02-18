@@ -73,27 +73,25 @@ class Spotify(object):
             if user_playlist['name'] == name:
                 playlist = user_playlist
                 break
-            else:
-                logging.warning("'{}' != '{}'".format(user_playlist['name'], name))
 
         if not playlist:
-            raise Exception("Unable to find playlist '{}'. Is it public?".format(name))
+            logging.warning("Unable to find playlist '{}'. Is it public?".format(name))
+            return None
+
+        # Exchange the minified playlist for a full playlist
+        playlist = self._get(playlist['href'])
 
         # Once we've found the playlist, get all it's tracks
-        tracks = self._get(playlist['tracks']['href'])
-        next_results_url = tracks['next']
+        next_results_url = playlist['tracks']['next']
 
         # Spotify paginates long results
         while next_results_url:
             paginated_results = self._get(next_results_url)
             next_results_url = paginated_results['next']
 
-            tracks['items'] += paginated_results['items']
-
-        # Add all the tracks to the playlist
-        playlist['tracks'] = [track_item['track'] for track_item in tracks['items']]
+            playlist['tracks']['items'] += paginated_results['items']
 
         return Playlist.from_spotify(playlist)
 
-    def create_playlist(self, playlist_obj):
-        pass
+    def create_playlist(self, playlist_obj, override):
+        return None
