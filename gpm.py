@@ -2,6 +2,8 @@ import os
 
 from gmusicapi import Mobileclient
 
+from utils import is_match
+
 EMAIL_ADDRESS = os.environ.get('GPM_EMAIL_ADDRESS')
 APP_PASSWORD = os.environ.get('GPM_APP_PASSWORD')
 
@@ -37,9 +39,7 @@ class GPM(object):
         hits = [song_hit['track'] for song_hit in results.get('song_hits')]
         # Check if song is a match
         for hit in hits:
-            title, artist, album = hit['title'], hit['artist'], hit['album']
-            # TODO: Make this smarter
-            if song.title in title and song.artist in artist:
+            if is_match(hit['title'], song.title) and is_match(hit['artist'], song.artist):
                 return hit['storeId']
 
         return None
@@ -48,7 +48,9 @@ class GPM(object):
         return None
 
     def create_playlist(self, playlist, override):
-        gpm_playlist_id = self._get_playlist(playlist.title).get('id')
+        gpm_playlist = self._get_playlist(playlist.title)
+        gpm_playlist_id = gpm_playlist['id'] if gpm_playlist else None
+
         # Delete if it already exists
         if gpm_playlist_id and override:
             self._delete_playlist(gpm_playlist_id)
@@ -57,6 +59,7 @@ class GPM(object):
             gpm_playlist_id = self._create_playlist(playlist.title, playlist.description)
 
         # Get all song_ids and remove results we could not match
+        # TODO: Make this async
         matches = [self._match_song(song) for song in playlist.songs]
         song_ids = [match for match in matches if match is not None]
         
