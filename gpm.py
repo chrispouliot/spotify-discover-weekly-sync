@@ -31,7 +31,7 @@ class GPM(object):
 
     def _add_songs_to_playlist(self, playlist_id, song_ids):
         return self._api.add_songs_to_playlist(playlist_id, song_ids)
-    
+
     def _match_song(self, song):
         query = f'{song.title} {song.artist}'
         results = self._api.search(query)
@@ -62,7 +62,7 @@ class GPM(object):
         # TODO: Make this async
         matches = [self._match_song(song) for song in playlist.songs]
         song_ids = [match for match in matches if match is not None]
-        
+
         self._add_songs_to_playlist(gpm_playlist_id, song_ids)
         # Return number of songs added to playlist
         return len(song_ids)
