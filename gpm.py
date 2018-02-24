@@ -3,6 +3,7 @@ import os
 from gmusicapi import Mobileclient
 
 from utils import is_match
+from serializers import Playlist
 
 EMAIL_ADDRESS = os.environ.get('GPM_EMAIL_ADDRESS')
 APP_PASSWORD = os.environ.get('GPM_APP_PASSWORD')
@@ -15,13 +16,6 @@ class GPM(object):
         self._api = Mobileclient(debug_logging=False)
         if not self._api.login(EMAIL_ADDRESS, APP_PASSWORD, Mobileclient.FROM_MAC_ADDRESS):
             raise Exception("Failed to authenticate with GPM")
-
-    def _get_playlist(self, name):
-        playlists = self._api.get_all_playlists()
-        for playlist in playlists:
-            if playlist['name'] == name:
-                return playlist
-        return None
 
     def _delete_playlist(self, playlist_id):
         return self._api.delete_playlist(playlist_id)
@@ -43,9 +37,17 @@ class GPM(object):
                 return hit['storeId']
 
         return None
+    
+    def _get_playlist(self, name):
+        playlists = self._api.get_all_user_playlist_contents()
+        for playlist in playlists:
+            if playlist['name'] == name:
+                return playlist
+        return None
 
     def get_playlist(self, name):
-        return None
+        playlist = self._get_playlist(name)
+        return Playlist.from_gpm(playlist) if playlist else None
 
     def create_playlist(self, playlist, override):
         gpm_playlist = self._get_playlist(playlist.title)
@@ -59,7 +61,6 @@ class GPM(object):
             gpm_playlist_id = self._create_playlist(playlist.title, playlist.description)
 
         # Get all song_ids and remove results we could not match
-        # TODO: Make this async
         matches = [self._match_song(song) for song in playlist.songs]
         song_ids = [match for match in matches if match is not None]
 
