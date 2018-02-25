@@ -1,28 +1,37 @@
-import logging
+import sys
 
 from datetime import datetime
 
+from config import logger
 from musicclient import GPMClient, SpotifyClient
 
 
-def main():
+def main(playlist_titles):
     spotify = SpotifyClient()
     gpm = GPMClient()
-    disco_weekly = spotify.get_playlist("Discover Weekly")
-    if not disco_weekly:
-        logging.warning("Could not find playlist on Spotify")
-        return
 
-    num_matched_songs = gpm.create_playlist(disco_weekly)
-    logging.warning(f"Ceated playlist on GPM. Matched {num_matched_songs} of {len(disco_weekly.songs)} songs")
+    for title in playlist_titles:
+        logger.info(f"Attempting to copy playlist '{title}'..")
+
+        playlist = spotify.get_playlist(title)
+        if not playlist:
+            logger.warning("Could not find playlist on Spotify")
+            continue
+
+        num_matched_songs = gpm.create_playlist(playlist)
+        logger.info(f"Ceated playlist on GPM. Matched {num_matched_songs} of {len(playlist.songs)} songs")
 
 
 if __name__ == '__main__':
-    logging.warning('Starting..')
-    # Temporary date check for use in my weekly cron of this script.
-    weekday = datetime.utcnow().date().weekday()
-    if weekday == 0:
-        logging.warning("It's Monday! Copying playlist..")
-        main()
+    logger.info('Starting..')
+
+    playlist_titles = sys.argv[1:]
+    if playlist_titles:
+        weekday = datetime.utcnow().date().weekday()
+        if weekday == 0:
+            logger.info("It's Monday! Copying..")
+            main(playlist_titles)
+        else:
+            logger.info("It's not Monday! Quitting..")
     else:
-        logging.warning("It's not Monday! Quitting..")
+        logger.warning("No playlists entered..")

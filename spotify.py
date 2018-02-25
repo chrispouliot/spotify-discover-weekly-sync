@@ -5,15 +5,13 @@ import requests
 from requests.auth import HTTPBasicAuth
 from datetime import datetime, timedelta
 
+from config import logger, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_USER_ID
 from serializers import Playlist
 
-CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
-USER_ID = os.environ.get("SPOTIFY_USER_ID")
 
 BASE_URL = "https://api.spotify.com/v1"
 AUTHORIZE_URL = "https://accounts.spotify.com/api/token"
-PLAYLISTS_URL = f"https://api.spotify.com/v1/users/{USER_ID}/playlists"
+PLAYLISTS_URL = f"https://api.spotify.com/v1/users/{SPOTIFY_USER_ID}/playlists"
 
 
 class Spotify(object):
@@ -33,7 +31,7 @@ class Spotify(object):
             "grant_type": "client_credentials"
         }
 
-        r = requests.post(AUTHORIZE_URL, auth=HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET), data=data)
+        r = requests.post(AUTHORIZE_URL, auth=HTTPBasicAuth(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET), data=data)
 
         if r.status_code >= 400:
             raise Exception("Something bad status {} {}".format(r.status_code, r.text))
@@ -43,7 +41,7 @@ class Spotify(object):
         token = body.get("access_token")
 
         if not expiry or not token:
-            logging.warning(
+            logger.warning(
                 "Failed to authenticate with Spotify. Invalid tokens returned. Status code %s",
                 r.status_code
             )
@@ -75,7 +73,7 @@ class Spotify(object):
                 break
 
         if not playlist:
-            logging.warning("Unable to find playlist '{}'. Is it public?".format(name))
+            logger.warning("Unable to find playlist '{}'. Is it public?".format(name))
             return None
 
         # Exchange the minified playlist for a full playlist
