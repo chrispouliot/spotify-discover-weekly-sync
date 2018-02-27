@@ -3,7 +3,12 @@ from spotify import Spotify
 
 
 class MusicClient(object):
+    _client_class = None
     _client = None
+
+    def __init__(self):
+        # Lazy load the client
+        self.client = self._client_class()
 
     def get_playlist(self, name):
         '''
@@ -29,8 +34,8 @@ class MusicClient(object):
 
 
 class SpotifyClient(MusicClient):
-    _client = Spotify()
+    _client_class = Spotify
 
 
 class GPMClient(MusicClient):
-    _client = GPM()
+    _client_class = GPM

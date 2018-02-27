@@ -7,6 +7,10 @@ from musicclient import GPMClient, SpotifyClient
 
 
 def main(playlist_titles):
+    if not playlist_titles:
+        logger.warning("No playlists entered, exiting..")
+        return
+
     spotify = SpotifyClient()
     gpm = GPMClient()
 
@@ -19,19 +23,15 @@ def main(playlist_titles):
             continue
 
         num_matched_songs = gpm.create_playlist(playlist)
-        logger.info(f"Ceated playlist on GPM. Matched {num_matched_songs} of {len(playlist.songs)} songs")
+        logger.info(f"Ceated playlist on GPM. Matched {num_matched_songs}/{len(playlist.songs)} songs")
 
 
 if __name__ == '__main__':
     logger.info('Starting..')
 
-    playlist_titles = sys.argv[1:]
-    if playlist_titles:
-        weekday = datetime.utcnow().date().weekday()
-        if weekday == 0:
-            logger.info("It's Monday! Copying..")
-            main(playlist_titles)
-        else:
-            logger.info("It's not Monday! Quitting..")
+    weekday = datetime.utcnow().date().weekday()
+    if weekday == 0:
+        logger.info("It's Monday! Copying..")
+        main(sys.argv[1:])  # Pass playlist title cli args
     else:
-        logger.warning("No playlists entered..")
+        logger.info("It's not Monday! Quitting..")
