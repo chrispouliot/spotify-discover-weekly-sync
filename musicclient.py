@@ -36,6 +36,12 @@ class MusicClient(object):
 class SpotifyClient(MusicClient):
     _client_class = Spotify
 
+    def __init__(self):
+        super()
+
 
 class GPMClient(MusicClient):
     _client_class = GPM
+
+    def __init__(self):
+        super()
