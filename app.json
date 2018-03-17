@@ -9,11 +9,11 @@
   "addons": ["scheduler"],
   "env": {
       "SPOTIFY_CLIENT_ID": {
-          "description": "Client ID provided by Spotify when registering an application for use with their API",
+          "description": "Spotify API Client ID (First three steps from https://developer.spotify.com/web-api/tutorial/)",
           "value": ""
       },
       "SPOTIFY_CLIENT_SECRET": {
-          "description": "Client Secret provided by Spotify when registering an application for use with their API",
+          "description": "Spotify API Client Secret (First three steps from https://developer.spotify.com/web-api/tutorial/)",
           "value": ""
       },
       "SPOTIFY_USER_ID": {
