@@ -1,7 +1,5 @@
 import sys
 
-from datetime import datetime
-
 from config import logger
 from musicclient import GPMClient, SpotifyClient
 
@@ -23,15 +21,9 @@ def main(playlist_titles):
             continue
 
         num_matched_songs = gpm.create_playlist(playlist)
-        logger.info(f"Ceated playlist on GPM. Matched {num_matched_songs}/{len(playlist.songs)} songs")
+        logger.info(f"Created playlist on GPM. Matched {num_matched_songs}/{len(playlist.songs)} songs")
 
 
 if __name__ == '__main__':
     logger.info('Starting..')
-
-    weekday = datetime.utcnow().date().weekday()
-    if weekday == 0:
-        logger.info("It's Monday! Copying..")
-        main(sys.argv[1:])  # Pass playlist title cli args
-    else:
-        logger.info("It's not Monday! Quitting..")
+    main(sys.argv[1:])

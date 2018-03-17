@@ -33,7 +33,7 @@ class GPM(object):
                 return hit['storeId']
 
         return None
-    
+
     def _get_playlist(self, name):
         playlists = self._api.get_all_user_playlist_contents()
         for playlist in playlists:
@@ -46,8 +46,10 @@ class GPM(object):
         return Playlist.from_gpm(playlist) if playlist else None
 
     def create_playlist(self, playlist, override):
-        gpm_playlist = self._get_playlist(playlist.title)
-        gpm_playlist_id = gpm_playlist['id'] if gpm_playlist else None
+        gpm_playlist = self.get_playlist(playlist.title)
+        gpm_playlist_id = gpm_playlist.id if gpm_playlist else None
+
+        # TODO: Check if exact playlist already exists in GPM and if so exit early if not override=True
 
         # Delete if it already exists
         if gpm_playlist_id and override:

@@ -1,0 +1,32 @@
+{
+  "name": "Spotify Discover Weekly Sync",
+  "description": "Automatically sync your Spotify Discovery Weekly playlist to Google Play Music",
+  "keywords": [
+      "spotify",
+      "discover weekly",
+      "google play music"
+  ],
+  "addons": ["scheduler"],
+  "env": {
+      "SPOTIFY_CLIENT_ID": {
+          "description": "Client ID provided by Spotify when registering an application for use with their API",
+          "value": ""
+      },
+      "SPOTIFY_CLIENT_SECRET": {
+          "description": "Client Secret provided by Spotify when registering an application for use with their API",
+          "value": ""
+      },
+      "SPOTIFY_USER_ID": {
+          "description": "Spotify username",
+          "value": ""
+      },
+      "GPM_EMAIL_ADDRESS": {
+          "description": "The email address used to log into GPM",
+          "value": "example@gmail.com"
+      },
+      "GPM_APP_PASSWORD": {
+          "description": "A Google App Password generated for use by this program (https://support.google.com/accounts/answer/185833?hl=en)",
+          "value": ""
+      }
+  }
+}
