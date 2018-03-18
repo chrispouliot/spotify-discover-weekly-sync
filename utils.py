@@ -1,5 +1,6 @@
 from difflib import SequenceMatcher as SM
 
+
 def is_match(s1, s2):
     """
     Fuzzy matching of two strings

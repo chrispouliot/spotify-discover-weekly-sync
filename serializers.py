@@ -28,7 +28,7 @@ class Song(object):
             title=json['title'],
             artist=json['artist'],
             album=json['album'],
-            id=json['trackId'],
+            id=json.get('storeId'),  # This isn't always present
         )
 
 

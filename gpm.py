@@ -49,8 +49,6 @@ class GPM(object):
         gpm_playlist = self.get_playlist(playlist.title)
         gpm_playlist_id = gpm_playlist.id if gpm_playlist else None
 
-        # TODO: Check if exact playlist already exists in GPM and if so exit early if not override=True
-
         # Delete if it already exists
         if gpm_playlist_id and override:
             self._delete_playlist(gpm_playlist_id)
