@@ -12,3 +12,5 @@ Set this up using the Deploy button below
 After you've got it created, click on `Heroku Scheduler` and set a daily schedule to run `python app.py "Discover Weekly"`
 
 That's it! Now you'll have your Discover Weekly playlist synced with Spotify. Enjoy your Monday tunes.
+
+Note: Please ensure your Discover Weekly playlist is set to 'public' on Spotify. Otherwise the script won't be able to find it.

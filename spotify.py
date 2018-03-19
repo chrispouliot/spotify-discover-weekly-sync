@@ -34,7 +34,7 @@ class Spotify(object):
         r = requests.post(AUTHORIZE_URL, auth=HTTPBasicAuth(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET), data=data)
 
         if r.status_code >= 400:
-            raise Exception("Something bad status {} {}".format(r.status_code, r.text))
+            raise Exception(f'HTTP Error {r.status_code}: {r.text}')
 
         body = r.json()
         expiry = body.get("expires_in")
@@ -58,7 +58,7 @@ class Spotify(object):
         r = requests.get(url, headers=headers)
 
         if r.status_code >= 400:
-            raise Exception("Something bad status {} {}".format(r.status_code, r.text))
+            raise Exception(f'HTTP Error {r.status_code}: {r.text}')
 
         return r.json()
 
