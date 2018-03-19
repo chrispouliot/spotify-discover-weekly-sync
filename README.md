@@ -5,7 +5,9 @@ Automatically sync your Spotify Discovery Weekly playlist to Google Play Music
 
 Set this up using the Deploy button below
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+<a href="https://heroku.com/deploy">
+  <img src="https://www.herokucdn.com/deploy/button.svg" target="_blank" alt="Deploy">
+</a>
 
 After you've got it created, click on `Heroku Scheduler` and set a daily schedule to run `python app.py "Discover Weekly"`
 
