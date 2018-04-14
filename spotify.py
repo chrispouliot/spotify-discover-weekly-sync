@@ -1,5 +1,3 @@
-import logging
-import os
 import requests
 
 from requests.auth import HTTPBasicAuth
