@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 
-app = Flask(__name__, template_folder="client")
+# Server static through nginx in future
+app = Flask(__name__, template_folder="client", static_folder="client")
 
 
 @app.route('/')
