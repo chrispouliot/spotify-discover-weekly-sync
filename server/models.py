@@ -23,5 +23,6 @@ class Session:
         return str(obj_id)
 
     @staticmethod
-    def get(str_id):
-        return _sessions.find_one({'_id': ObjectId(str_id)})
+    def get(_id):
+        return _sessions.find_one({'_id': ObjectId(_id)})
+

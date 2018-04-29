@@ -3,8 +3,7 @@ from musicsync import SpotifyOAuth
 
 from server.config import \
     SPOTIFY_CLIENT_ID, \
-    SPOTIFY_CLIENT_SECRET, \
-    REDIRECT_URL \
+    REDIRECT_URL
 
 # Server static through nginx in future
 app = Flask(__name__, template_folder="client", static_folder="client")
