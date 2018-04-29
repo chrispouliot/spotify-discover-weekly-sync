@@ -1,5 +1,5 @@
 .vscode
-.run
+run
 __pycache__/
 node_modules/
 *.pyc
