@@ -1,0 +1,21 @@
+{
+	"extends": [
+		"airbnb"
+	],
+	"parserOptions": {
+		"ecmaVersion": 2016,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+  },
+  "rules": {
+		"semi": [2, "never"],
+		"no-underscore-dangle": 0
+  },
+	"env": {
+		"es6": true,
+		"browser": true,
+		"node": false
+	}
+}
