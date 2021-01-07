@@ -9,7 +9,7 @@ gmusicapi==11.0.0
 gpsoauth==0.4.1
 httplib2==0.10.3
 idna==2.6
-lxml==4.1.1
+lxml==4.6.2
 mccabe==0.6.1
 MechanicalSoup==0.10.0
 mock==2.0.0
