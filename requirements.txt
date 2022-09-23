@@ -17,7 +17,7 @@ mutagen==1.40.0
 oauth2client==4.1.2
 pbr==3.1.1
 proboscis==1.2.6.0
-protobuf==3.5.1
+protobuf==3.18.3
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycodestyle==2.3.1
